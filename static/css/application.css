@@ -1,0 +1,27 @@
+.bunkTable th
+{
+	padding-left: 50px;
+	padding-right: 80px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+td
+{
+	padding-left: 50px;
+	padding-right: 30px;
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+.redPercentage
+{
+	color: red;
+}
+.greenPercentage
+{
+	color: green;
+}
+label,input
+{
+	font-size: 20px;
+	padding: 5px;
+}

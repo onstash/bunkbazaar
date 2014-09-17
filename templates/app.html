@@ -1,0 +1,24 @@
+{% extends "template.html" %}
+{% block content %}
+	<div class="jumbo">
+		<table class="bunkTable">
+			<th>Subject</th>
+			<th>Bunk</th>
+			<th>Present</th>
+			<th>Total</th>
+			<th>Percentage</th>
+			<th>You can bunk/need to attend</th>
+		</table>
+		<table class="bunkTable">
+			<td>{{ bunk_data['subject'] }}</td>
+			<td>{{ bunk_data['bunks'] }}</td>
+			<td>{{ bunk_data['bunks']+bunk_data['present'] }}</td>
+			{% if (bunk_data.bunks*100/(bunk_data.bunks+bunk_data.present))<80.00 %}
+				<td class="redPercentage">{{ (bunk_data.present*100/(bunk_data.bunks+bunk_data.present)) }}%</td>
+			{% else %}
+				<td class ="greenPercentage">{{ (bunk_data.present*100/(bunk_data.bunks+bunk_data.present)) }}%</td>
+			{% endif %}
+
+		</table>
+	</div>
+{% endblock %}
