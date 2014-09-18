@@ -1,6 +1,8 @@
 {% extends "template.html" %}
 {% block content %}
-	<label>Number of subjects : <input type="text" name="numSubjects"/></label><br />
-	<label>Minimum percentage : <input type="text" name="minPercentage" /></label><br />
-	<button type="button" class="btn btn-default btn-lg">Submit</button>
+	<form action="method">
+		<label>Number of subjects : <input type="text" name="numSubjects"/></label><br />
+		<label>Minimum percentage : <input type="text" name="minPercentage" /></label><br />
+		<button type="button" class="btn btn-default btn-lg">Submit</button>
+	</form>
 {% endblock %}

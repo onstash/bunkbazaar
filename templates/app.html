@@ -2,23 +2,44 @@
 {% block content %}
 	<div class="jumbo">
 		<table class="bunkTable">
-			<th>Subject</th>
-			<th>Bunk</th>
-			<th>Present</th>
-			<th>Total</th>
-			<th>Percentage</th>
-			<th>You can bunk/need to attend</th>
-		</table>
-		<table class="bunkTable">
-			<td>{{ bunk_data['subject'] }}</td>
-			<td>{{ bunk_data['bunks'] }}</td>
-			<td>{{ bunk_data['bunks']+bunk_data['present'] }}</td>
-			{% if (bunk_data.bunks*100/(bunk_data.bunks+bunk_data.present))<80.00 %}
-				<td class="redPercentage">{{ (bunk_data.present*100/(bunk_data.bunks+bunk_data.present)) }}%</td>
-			{% else %}
-				<td class ="greenPercentage">{{ (bunk_data.present*100/(bunk_data.bunks+bunk_data.present)) }}%</td>
-			{% endif %}
-
+				<tr>
+					<th>Subject</th>
+					<th>Bunk</th>
+					<th>Present</th>
+					<th>Total</th>
+					<th>Percentage</th>
+					<th>You can bunk/need to attend</th>
+				</tr>
+			{% for data in bunk_data %}
+				<tr>
+					<td>{{ data['subject'] }}</td>
+					<td>{{ data['bunks'] }}</td>
+					<td>{{ data['present'] }}</td>
+					<td>{{ data['bunks']+data['present'] }}</td>
+					
+					{% if (data.present*100/(data.bunks+data.present)) < 80.00 %}
+						<td class="redPercentage">{{ (data.present*100/(data.bunks+data.present)) }}%</td>
+					{% elif (data.present*100/(data.bunks+data.present)) > 80.00 %}
+						<td class ="greenPercentage">{{ (data.present*100/(data.bunks+data.present)) }}%</td>
+					{% else %}
+						<td class="orangePercentage">{{ (data.present*100/(data.bunks+data.present)) }}%</td>
+					{% endif %}
+					
+					{% if (data.bunks*100/(data.bunks+data.present))<80.00 %}
+						{% for j in range(1,50) %}
+							{% if ((data.present+j)*100)/((data.bunks+data.present)+j)==80.00 %}
+								<td class="redPercentage">{{ j }}</td>	
+							{% endif %}		
+						{% endfor %}
+					{% else %}
+						{% for j in range(1,50) %}
+							{% if (data.present*100)/((data.bunks+data.present)+j)==80.00 %}
+								<td class="greenPercentage">{{ j }}</td>
+							{% endif %}
+						{% endfor %}
+					{% endif %}
+				</tr>
+			{% endfor %}
 		</table>
 	</div>
 {% endblock %}

@@ -20,6 +20,10 @@ td
 {
 	color: green;
 }
+.orangePercentage
+{
+	color: orange;
+}
 label,input
 {
 	font-size: 20px;
