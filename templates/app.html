@@ -1,6 +1,64 @@
 {% extends "template.html" %}
 {% block content %}
+	{% macro total_details(bunk_data) %}
+		{% set total_bunks,total_present, total_total, total_percentage, total_need = 0,0,1,0.0,0 %}
+		{% set count = 0 %}
+		{% for data in bunk_data %}
+			{% set subject,bunks,present,total = data.subject,data.bunks,data.present,(data.bunks+data.present) %}
+			{% set percentage = present*100/total %}
+			{% set total_bunks = total_bunks + bunks %}
+			{% set total_present = total_present + present %}
+			{% set total_total = total_total + total %}
+			{% set total_percentage = total_present*100/total_total %}
+			{% set count = count + 1 %}
+			{% if count==(bunk_data|length) %}
+				<th>Total</th>
+				<th>{{ total_bunks }}</th>
+				<th>{{ total_present }}</th>
+				<th>{{ total_total }}</th>
+				{% if total_percentage<80.00 %}
+					<th class="redPercentage">{{ total_percentage }}%</th>
+				{% elif total_percentage>80.00 %}
+					<th class="greenPercentage">{{ total_percentage }}%</th>
+				{% else %}
+					<th class="orangePercentage">{{ total_percentage }}%</th>
+				{% endif %}
+			{% endif %}
+		{% endfor %}
+	{% endmacro %}
+
+	{% macro details(data) %}
+		{% set subject,bunks,present,total,need = data.subject,data.bunks,data.present,(data.bunks+data.present),0 %}
+		{% set percentage = present*100/total %}
+		<td>{{ subject }}</td>
+		<td>{{ bunks }}</td>
+		<td>{{ present }}</td>
+		<td>{{ total }}</td>
+		{% if percentage<80.00 %}
+			<td class="redPercentage">{{ percentage }}%</td>
+		{% elif percentage>80.00 %}
+			<td class="greenPercentage">{{ percentage }}%</td>
+		{% else %}
+			<td class="orangePercentage">{{ percentage }}%</td>
+		{% endif %}
+
+		{% if percentage<80.00 %}
+			{% for j in range(1,50) %}
+				{% if ((present+j)*100)/(total+j)==80.00 %}
+					<td class="redPercentage">{{ j }}</td>	
+				{% endif %}		
+			{% endfor %}
+		{% else %}
+			{% for j in range(1,50) %}
+				{% if (present*100)/(total+j)==80.00 %}
+					<td class="greenPercentage">{{ j }}</td>
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+	{% endmacro %}
+
 	<div class="jumbo">
+		
 		<table class="bunkTable">
 				<tr>
 					<th>Subject</th>
@@ -10,36 +68,15 @@
 					<th>Percentage</th>
 					<th>You can bunk/need to attend</th>
 				</tr>
+			
 			{% for data in bunk_data %}
 				<tr>
-					<td>{{ data['subject'] }}</td>
-					<td>{{ data['bunks'] }}</td>
-					<td>{{ data['present'] }}</td>
-					<td>{{ data['bunks']+data['present'] }}</td>
-					
-					{% if (data.present*100/(data.bunks+data.present)) < 80.00 %}
-						<td class="redPercentage">{{ (data.present*100/(data.bunks+data.present)) }}%</td>
-					{% elif (data.present*100/(data.bunks+data.present)) > 80.00 %}
-						<td class ="greenPercentage">{{ (data.present*100/(data.bunks+data.present)) }}%</td>
-					{% else %}
-						<td class="orangePercentage">{{ (data.present*100/(data.bunks+data.present)) }}%</td>
-					{% endif %}
-					
-					{% if (data.bunks*100/(data.bunks+data.present))<80.00 %}
-						{% for j in range(1,50) %}
-							{% if ((data.present+j)*100)/((data.bunks+data.present)+j)==80.00 %}
-								<td class="redPercentage">{{ j }}</td>	
-							{% endif %}		
-						{% endfor %}
-					{% else %}
-						{% for j in range(1,50) %}
-							{% if (data.present*100)/((data.bunks+data.present)+j)==80.00 %}
-								<td class="greenPercentage">{{ j }}</td>
-							{% endif %}
-						{% endfor %}
-					{% endif %}
+					{{ details(data) }}
 				</tr>
 			{% endfor %}
+				<tr>
+					{{ total_details(bunk_data) }}
+				</tr>
 		</table>
 	</div>
 {% endblock %}
