@@ -1,10 +1,13 @@
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, request, flash
+from forms import ContactForm
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
 	return render_template('index.html')
+
+app.secret_key = '654c6da8f3b0fd8fe819669daf07996738d21a53c02c731b0aee6373'
 
 bunk_data = [
 {'subject':'Soft Computing Techniques','bunks':12,'present':29},
@@ -24,6 +27,20 @@ def bunkbazaar():
 @app.route('/input')
 def inputs():
 	return render_template('input.html')
+
+@app.route('/contact', methods = ['GET', 'POST'])
+def contact():
+	form = ContactForm()
+	if request.method == 'POST':
+		if form.validate() == False:
+			flash("All fields are required!")
+			return render_template('contact.html', form=form)
+		else:
+			return 'Form posted!'
+	elif request.method == 'GET':
+		return render_template('contact.html',form=form)
+
+	
 
 if __name__ == '__main__':
 	app.run(debug=True)

@@ -1,5 +1,6 @@
 {% extends "template.html" %}
 {% block content %}
+
 	{% macro total_details(bunk_data) %}
 		{% set total_bunks,total_present, total_total, total_percentage, total_need = 0,0,1,0.0,0 %}
 		{% set count = 0 %}

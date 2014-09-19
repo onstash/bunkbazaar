@@ -1,0 +1,21 @@
+{% extends "template.html" %}
+{% block content %}
+	<h2>Contact<h2>
+	<form action="{{ url_for('contact') }}", method=post>
+		{{ form.hidden_tag() }}
+		
+		{{ form.name.label }}
+		{{ form.name }}
+		<br/>
+		{{ form.email.label }}
+		{{ form.email }}
+		<br/>
+		{{ form.subject.label }}
+		{{ form.subject }}
+		<br/>
+		{{ form.message.label }}
+		{{ form.message }}
+		<br/>
+		{{ form.submit}}
+	</form>
+{% endblock %}
