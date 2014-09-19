@@ -4,18 +4,17 @@
 	<form action="{{ url_for('contact') }}", method=post>
 		{{ form.hidden_tag() }}
 		
-		{{ form.name.label }}
-		{{ form.name }}
+		<label>Name <input type="text" name="name"></input></label>
 		<br/>
-		{{ form.email.label }}
-		{{ form.email }}
+
+		<label>Email <input type="text" name="email"></input></label>
 		<br/>
-		{{ form.subject.label }}
-		{{ form.subject }}
+		
+		<label>Subject <input type="text" name="subject"></input></label>
 		<br/>
-		{{ form.message.label }}
-		{{ form.message }}
+
+		<label>Message<textarea rows="5" cols="20" name="message"></textarea></label>
 		<br/>
-		{{ form.submit}}
+		<input type="submit" name="input">
 	</form>
 {% endblock %}

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, flash
+from flask import Flask, render_template, redirect, request, flash, url_for
 from forms import ContactForm
 
 app = Flask(__name__)
@@ -30,16 +30,19 @@ def inputs():
 
 @app.route('/contact', methods = ['GET', 'POST'])
 def contact():
-	form = ContactForm()
 	if request.method == 'POST':
-		if form.validate() == False:
-			flash("All fields are required!")
-			return render_template('contact.html', form=form)
-		else:
-			return 'Form posted!'
+		name = request.form['name']
+		email = request.form['email']
+		subject = request.form['subject']
+		message = request.form['message']
+		print name
+		return render_template('contactsuccess.html', name=name, email=email, subject=subject, message=message)
 	elif request.method == 'GET':
-		return render_template('contact.html',form=form)
+		return render_template('contact.html')
 
+#@app.route('/contactsucess')
+#def contact_success():
+#	return render_template('')
 	
 
 if __name__ == '__main__':
