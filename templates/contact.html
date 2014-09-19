@@ -2,15 +2,13 @@
 {% block content %}
 	<h2>Contact<h2>
 	<form action="{{ url_for('contact') }}", method=post>
-		{{ form.hidden_tag() }}
-		
-		<label>Name <input type="text" name="name"></input></label>
+		<label>Name <input type="text" name="name" required></input></label>
 		<br/>
 
-		<label>Email <input type="text" name="email"></input></label>
+		<label>Email <input type="email" name="email" required></input></label>
 		<br/>
 		
-		<label>Subject <input type="text" name="subject"></input></label>
+		<label>Subject <input type="text" name="subject" required></input></label>
 		<br/>
 
 		<label>Message<textarea rows="5" cols="20" name="message"></textarea></label>
